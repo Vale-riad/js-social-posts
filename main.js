@@ -55,21 +55,24 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+function onClickLikeButton(event){
+    event.preventDefault();
+    this.classList.add('like-button--liked');
+}
 const teamContainer = document.getElementById('container');
 for (let i = 0; i<posts.length; i++){
     const profiles = posts[i];
     const listItem = document.getElementById('template-posts').content.cloneNode(true);
-    listItem.querySelector('.profile-pic').innerHTML = `<img src =${profiles.media}>`;
+    listItem.querySelector('.profile-pic'). src =profiles.author.image;
+    listItem.querySelector('.profile-pic').alt = profiles.author.name
     listItem.querySelector('.post-meta__author').innerHTML = profiles.author.name;
-    listItem.querySelector('.post-meta__time').innerHTML = profiles.created;
+    listItem.querySelector('.post-meta__time').innerHTML = new Date(profiles.created).toLocaleDateString();
     listItem.querySelector('.post__text').innerHTML = profiles.content;
-    listItem.querySelector('.post__image').innerHTML = `<img src =${profiles.author.image}>`;
+    listItem.querySelector('.post__image >img'). src = profiles.media;
     listItem.querySelector('.js-likes-counter').innerHTML = profiles.likes;
+    listItem.querySelector('.js-like-button').addEventListener('click', onClickLikeButton);
+    listItem.querySelector('.js-like-button').setAttribute('data-postid', profiles.id);
 
     teamContainer.append(listItem);
 }
-const likeBtn = document.querySelector(".js-like-button");
-likeBtn.addEventListener('click', function onClick() {
-   
-  likeBtn.classList.add('like-button--liked');
-});
+
